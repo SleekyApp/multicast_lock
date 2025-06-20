@@ -1,33 +1,34 @@
+// Use the plugins block, which is the modern way to apply plugins.
+plugins {
+    id 'com.android.library'
+}
+
+// The group and version are often managed in the root project's build.gradle now,
+// but leaving them here is fine for a single module.
 group 'com.mylisabox.multicastlock'
 version '1.0-SNAPSHOT'
 
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
-    }
-}
-
-rootProject.allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
-apply plugin: 'com.android.library'
-
 android {
-    compileSdkVersion 31
+    // The namespace is required for AGP 7.3+ and is used to generate the R class.
+    namespace 'com.mylisabox.multicastlock'
+
+    // It's good practice to use a recent SDK version.
+    compileSdkVersion 34
 
     defaultConfig {
         minSdkVersion 16
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        // targetSdkVersion is important for compatibility with newer Android versions.
+        targetSdkVersion 34
+        // The support library runner is deprecated. Use the AndroidX version.
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    // It's better to set the source/target compatibility for Java.
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     lintOptions {
         disable 'InvalidPackage'
     }
